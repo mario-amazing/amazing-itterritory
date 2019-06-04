@@ -3,4 +3,6 @@ class Post < ApplicationRecord
   has_many :ratings
   has_one :post_statistic
   has_one :user_ip
+
+  validates :title, :description, presence: true
 end
