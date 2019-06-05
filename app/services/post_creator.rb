@@ -1,14 +1,19 @@
 class PostCreator
+  attr_reader :errors, :post
+
   def initialize(params)
     @params = params
+    @errors = {}
   end
 
   def call
     ActiveRecord::Base.transaction(requires_new: true) do
       create_post
       create_user_ip
+    rescue ActiveRecord::RecordInvalid => e
+      @errors.merge!(e.record.errors.messages)
+      raise ActiveRecord::Rollback
     end
-    @post
   end
 
   private
