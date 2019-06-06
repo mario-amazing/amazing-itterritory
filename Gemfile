@@ -35,12 +35,12 @@ group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'reek'
   gem 'faker'
+  gem 'factory_bot_rails'
 end
 
 group :test do
   gem 'rspec-rails'
   gem 'simplecov', require: false
-  gem 'factory_bot'
 end
 
 group :development do

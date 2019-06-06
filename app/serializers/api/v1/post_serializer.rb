@@ -1,7 +1,7 @@
 class Api::V1::PostSerializer < ActiveModel::Serializer
-  attributes :id, :title, :description, :user_login
+  attributes :id, :title, :description, :author_login
 
-   def user_login
+   def author_login
      object.user.login
   end
 end
