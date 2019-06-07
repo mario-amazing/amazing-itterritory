@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_06_04_142304) do
+ActiveRecord::Schema.define(version: 2019_06_07_121359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "post_statistics", force: :cascade do |t|
     t.float "average_grade"
-    t.integer "count"
+    t.integer "rating_count"
     t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
