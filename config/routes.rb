@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :post, only: [:create] do
-        resources :rating, only: [:create]
+        resource :rating, only: [:create]
       end
     end
   end

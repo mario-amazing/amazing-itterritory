@@ -1,4 +1,4 @@
-class Api::V1::RatingController < ApplicationController
+class Api::V1::RatingsController < ApplicationController
   def create
     post_rating_creator = PostRatingCreator.new(post_rating_params)
     post_rating_creator.call
