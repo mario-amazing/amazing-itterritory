@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 2019_06_07_121359) do
     t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
+  create_table "rating_table_views", force: :cascade do |t|
+    t.float "average_grade"
+    t.bigint "post_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["post_id"], name: "index_rating_table_views_on_post_id"
+  end
+
   create_table "ratings", force: :cascade do |t|
     t.integer "grade"
     t.bigint "post_id"
@@ -59,6 +67,7 @@ ActiveRecord::Schema.define(version: 2019_06_07_121359) do
 
   add_foreign_key "post_statistics", "posts"
   add_foreign_key "posts", "users"
+  add_foreign_key "rating_table_views", "posts"
   add_foreign_key "ratings", "posts"
   add_foreign_key "user_ips", "posts"
   add_foreign_key "user_ips", "users"
