@@ -1,5 +1,5 @@
 class PostRatingCreator
-  attr_reader :errors, :post_statistic
+  attr_reader :errors
 
   def initialize(params)
     @params = params
@@ -9,10 +9,17 @@ class PostRatingCreator
   def call
     ActiveRecord::Base.transaction(requires_new: true) do
       create_rating
-      calc_avg_rate
+      update_post_statistic
     rescue ActiveRecord::RecordInvalid => e
       @errors.merge!(e.record.errors.messages)
       raise ActiveRecord::Rollback
+    end
+  end
+
+  def post_statistic
+    @post_statistic ||= PostStatistic.find_or_initialize_by(post_id: @params[:post_id]) do |st|
+      st.average_grade = 0
+      st.rating_count = 0
     end
   end
 
@@ -26,15 +33,11 @@ class PostRatingCreator
     { post_id: @params[:post_id], grade: @params[:grade] }
   end
 
-  def calc_avg_rate
-    stat = PostStatistic.find_or_initialize_by(post_id: @params[:post_id]) do |st|
-      st.average_grade = 0
-      st.rating_count = 0
-    end
-    stat.lock!
+  def update_post_statistic
+    post_statistic.lock!
 
-    new_avg = AverageRatingCalculator.new(stat, @params[:grade]).call
-    @post_statistic = stat.tap do |s|
+    new_avg = AverageRatingCalculator.new(post_statistic, @params[:grade]).call
+    post_statistic.tap do |s|
       s.average_grade = new_avg.to_f
       s.rating_count += 1
       s.save!
