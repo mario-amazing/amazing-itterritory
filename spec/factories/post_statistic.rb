@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 FactoryBot.define do
   factory :post_statistic, class: 'PostStatistic' do
     association :post, factory: :post

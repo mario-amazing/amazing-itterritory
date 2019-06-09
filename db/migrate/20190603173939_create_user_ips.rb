@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class CreateUserIps < ActiveRecord::Migration[5.2]
   def change
     create_table :user_ips do |t|

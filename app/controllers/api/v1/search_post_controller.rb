@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 class Api::V1::SearchPostController < ApplicationController
   def top_posts
     if top_posts_count > 0
       render json: TopPostsSearcher.call(top_posts_count), each_serializer: Api::V1::TopPostsSerializer
-    else 
+    else
       render json: { error: { top_count: :invalid } }, status: :unprocessable_entity
     end
   end

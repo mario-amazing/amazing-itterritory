@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::RatingsController < ApplicationController
   def create
     post_rating_creator = PostRatingCreator.new(post_rating_params)

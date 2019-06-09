@@ -1,21 +1,23 @@
-require "rails_helper"
+# frozen_string_literal: true
 
-RSpec.describe PostRatingCreator, :type => :service do
-  subject { described_class.new(params)  }
+require 'rails_helper'
 
-  describe "#call" do
-    let(:params) {  { post_id: post.id, grade: grade  } }
+RSpec.describe PostRatingCreator, type: :service do
+  subject { described_class.new(params) }
+
+  describe '#call' do
+    let(:params) { { post_id: post.id, grade: grade } }
     let(:post) { FactoryBot.create(:post) }
     let(:grade) { 3 }
 
     context 'valid params' do
       context 'create successfully' do
-        it "creates rating" do
-          expect{ subject.call }.to change{Rating.count}.by(1)
+        it 'creates rating' do
+          expect { subject.call }.to change { Rating.count }.by(1)
         end
 
-        it "creates post statistic" do
-          expect{ subject.call }.to change{PostStatistic.count}.by(1)
+        it 'creates post statistic' do
+          expect { subject.call }.to change { PostStatistic.count }.by(1)
         end
 
         it 'creates post statistic with the average grade' do
@@ -26,26 +28,24 @@ RSpec.describe PostRatingCreator, :type => :service do
         context 'find post statistic' do
           let!(:post) { FactoryBot.create(:post, :with_post_statistic) }
 
-          it "does not change post statistic count" do
-            expect{ subject.call }.to change{PostStatistic.count}.by(0)
-              .and change{post.post_statistic.reload.average_grade}.from(5).to(4)
+          it 'does not change post statistic count' do
+            expect { subject.call }.to change { PostStatistic.count }.by(0)
+                                                                     .and change { post.post_statistic.reload.average_grade }.from(5).to(4)
           end
 
           it 'updates average rating' do
             subject.call
-
           end
         end
       end
-
     end
 
     context 'with invalid params' do
       let(:grade) { nil }
 
       it 'rollback transactions' do
-        expect{ subject.call }.to change{Rating.count}.by(0)
-          .and change{PostStatistic.count}.by(0)
+        expect { subject.call }.to change { Rating.count }.by(0)
+                                                          .and change { PostStatistic.count }.by(0)
       end
     end
   end

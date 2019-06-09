@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostRatingCreator
   attr_reader :errors
 

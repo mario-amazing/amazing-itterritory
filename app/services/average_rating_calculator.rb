@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AverageRatingCalculator
   def initialize(post_statistic, new_grade)
     @post_statistic = post_statistic

@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 class UniqIpPostersSearcher
   def self.call
     sql_response = ActiveRecord::Base.connection.execute(sql_query)
 
     default_hash = Hash.new { |h, k| h[k] = [] }
-    sql_response.entries.each_with_object(default_hash) { |tuple, h|
+    sql_response.entries.each_with_object(default_hash) do |tuple, h|
       h[tuple['ip']] << tuple['login']
-    }
+    end
   end
 
   private

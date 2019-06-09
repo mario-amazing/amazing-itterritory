@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class TopPostsSearcher
   def self.call(top_count)
     Post

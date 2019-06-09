@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class PostCreator
   attr_reader :errors, :post
 
@@ -35,6 +37,6 @@ class PostCreator
   end
 
   def user_ip_params
-    { ip: @params[:ip], post_id: @post.id, user_id: @user.id  }
+    { ip: @params[:ip], post_id: @post.id, user_id: @user.id }
   end
 end

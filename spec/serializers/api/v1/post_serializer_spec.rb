@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe Api::V1::PostSerializer, type: :serializer do
   let(:post) { FactoryBot.create(:post) }
   let(:serializer) { described_class.new(post) }
-  let(:expected_json_keys) { [:id, :title, :description, :author_login] }
+  let(:expected_json_keys) { %i[id title description author_login] }
 
   subject { serializer.as_json }
 
