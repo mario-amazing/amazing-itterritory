@@ -7,6 +7,10 @@ class Api::V1::SearchPostController < ApplicationController
     end
   end
 
+  def uniq_ip_posters
+    render json: UniqIpPostersSearcher.call
+  end
+
   private
 
   def post_params

@@ -28,4 +28,19 @@ RSpec.describe Api::V1::SearchPostController, :type => :controller do
       end
     end
   end
+
+  describe 'GET /api/v1/uniq_ip_posters' do
+    let(:expected_response_body) { {"141.202.126.126"=>["John", "John"]} }
+
+    before do
+      2.times { FactoryBot.create(:user_ip) }
+    end
+
+    it "response with 200" do
+      get :uniq_ip_posters, format: :json
+
+      expect(response).to have_http_status(:ok)
+      expect(JSON.parse(response.body)).to include(expected_response_body)
+    end
+  end
 end

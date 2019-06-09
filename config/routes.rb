@@ -3,6 +3,8 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       get '/top_posts', to: 'search_post#top_posts'
+      get '/uniq_ip_posters', to: 'search_post#uniq_ip_posters'
+
       resources :post, only: [:create] do
         resource :rating, only: [:create]
       end
