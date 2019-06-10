@@ -10,7 +10,13 @@ class Api::V1::SearchPostController < ApplicationController
   end
 
   def uniq_ip_posters
-    render json: UniqIpPostersSearcher.call
+    # Can be expired with 'expires_in: 1.minute' if necessary or can be deleted after
+    # post created. Depends on business requirements
+    uniq_ip_posters = Rails.cache.fetch("uniq_ip_posters", expires_in: 1.minute) do
+      UniqIpPostersSearcher.call.to_json
+    end
+
+    render json: uniq_ip_posters
   end
 
   private
