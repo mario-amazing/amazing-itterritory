@@ -6,5 +6,8 @@ FactoryBot.define do
     association :post, factory: :post
 
     ip { '141.202.126.126' }
+    trait :user_ip_max do
+      association :user, factory: :user_max
+    end
   end
 end

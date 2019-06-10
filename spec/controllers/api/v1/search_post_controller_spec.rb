@@ -32,10 +32,11 @@ RSpec.describe Api::V1::SearchPostController, type: :controller do
   end
 
   describe 'GET /api/v1/uniq_ip_posters' do
-    let(:expected_response_body) { { '141.202.126.126' => %w[John John] } }
+    let(:expected_response_body) { { '141.202.126.126' => %w[John Max] } }
 
     before do
-      2.times { FactoryBot.create(:user_ip) }
+      FactoryBot.create(:user_ip, :user_ip_max)
+      FactoryBot.create(:user_ip)
     end
 
     it 'response with 200' do
